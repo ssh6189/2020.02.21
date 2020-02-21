@@ -1,0 +1,86 @@
+<head>
+    <meta charset="UTF-8">
+  </head>
+  
+  
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  
+  <button id="btnMore">More</button>
+  
+  
+  
+  <div id="view">
+    <div id="item">
+     <a href=list?id=4> <span id=title>제목~~~~~~~~</span> </a> 
+       조회수<span id=cnt> 0 </span>
+       <!--<a href>지우기</a>-->
+       <!--이렇게 하면, 페이지가 바뀐다는 문제가 있다.-->
+       <!--<a href=/myboard/ajaxdel?pk=1></a>지우기</a>-->
+       
+       <!--attribute 속성이라고, 한다. 역할이 정해지지 않은것이다. 일반적으로 클래스도 어트리뷰트에 속한다.-->
+       <a id='del' href=javascript:deleteBoard(1)>지우기</a>
+
+     <br>
+    <div> 
+  </div>   
+  
+  <script>
+      //원래 1인데, 강제적으로 6으로 바꾸었다.
+      $("#item a").attr("href", "javascript:deleteBoard(6)");
+//append는 자식노드를 만드는것
+    //$("#view").append("<a href=fefef>데이터2</a>")
+    //$("#view").append("<a href=fefef>데이터2</a>") 
+    //$("#title", item).html("제목1")
+    //$("#cnt", item).text("10")
+
+    //클릭이벤트, 발생시 자식노드 추가
+   // item = $("#item").clone()
+    //id가 title 이란것을 찾아서, 제목1로 바꿔라
+   // $("#title", item).html("제목1")
+    //전체 문서가 아니라, 요 문서내에서 찾는거다.
+   // $("#cnt", item).text("10")
+    //$("#view").append(item)
+
+//javascript는 문장 끝나고, 반드시 ;를 사용해주어야 한다.
+
+//$("#item").hide();  
+   
+var page = 1
+
+function deleteBoard(pk)    {
+    //alert(pk);
+    $.get("/myboard/ajaxdel", {pk:pk}, function(json) {
+        //alert(json.error);
+        $("#item_" + pk).remove();    
+    });
+}
+
+function getPage(page) {
+		//json = {"datas": [{"pk": 1, "title": "\uc544\uce68\uba54\ub274", "cnt": 3}, {"pk": 2, "title": "\uc810\uc2ec\uba54\ub274", "cnt": 3}, {"pk": 3, "title": "\uc800\ub141\uba54\ub274", "cnt": 3}]}
+		
+	   $.get("/myboard/ajaxget", {page:page}, function(json) {	   
+			console.log(JSON.stringify(json));
+			
+			if ( json.datas.length == 0) alert("마지막페이지 입니다.");
+			for (i = 0; i < json.datas.length; i++) {		
+				item = $("#item").clone();
+                item.attr("id", "item_" + json.datas[i].pk);
+				item.show();
+				$("#title", item).html(json.datas[i].title);
+				$("#cnt", item).text(json.datas[i].cnt);      
+                $("#del", item).attr("href", "javascript:deleteBoard("+json.datas[i].pk+")");		
+				$("#view").append(item);   					
+			}   
+		});		
+   }    
+
+
+   $("#btnMore").click( function() {  
+			page++;
+			getPage(page);
+   });
+   
+   getPage(page);   
+   
+</script>

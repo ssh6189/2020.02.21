@@ -1,0 +1,25 @@
+<!--form이 있어야, 서버요청이 된다.-->
+<!--<form action="calc">-->
+<!--여기서, name과 id는 같아야한다.-->
+<!--구분자"" 쓰고 안쓰고는, " "같은거 쓰려고-->
+<!--만약, name=op1을 안쓰면, 입력은 되지만, 값이 서버로 넘어가지 않는다.-->
+<!--id는 HTML에서 정의한것이므로, 바꿀 수 없으며, 관행이다.-->
+
+<!--jquery 사용-->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<!--value는 default값-->
+아이디 <input type=text name=id id="id"> <br>
+암호 <input type=text name=pwd id="pwd"> <br>
+<!--btn은 버튼이라는 의미-->
+<button id="btnCalc">로그인</button>
+
+<div id="view">
+    <a href=list?id=4> 데이터1</a>
+</div>
+<script>
+//append는 자식노드를 만드는것
+    $("#view").append("<a href=fefef>데이터2</a>")
+
+</script>

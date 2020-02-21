@@ -1,0 +1,28 @@
+{% for data in datas %}
+
+    {{data.id}}/{{data.name}} <br>
+
+{% endfor %}
+
+<!--전체 페이지수를 알고 있으면, for 루프로 돌리면 된다.-->
+
+<!--페이지 유무검사-->
+{% if datas.has_other_pages %}
+<!--이전 페이지 유무검사-->
+    {% if datas.has_previous %}
+        <a href = "?page={{datas.previous_page_number}}"></a>
+    {% else %}
+
+    {% for i in datas.paginator.page_range %}
+      {% if datas.number == 1%}
+        <span>{span{{i}}</span>}
+      {% else% }
+      <
+
+<a href="?page=1">처음으로</a>
+<a href="?page=1">이전으로</a>
+<a href="?page=1">[1]</a>
+<a href="?page=2">[2]</a>
+<a href="?page=3">[3]</a>
+<a href="?page=1">다음으로</a>
+<a href="?page=3">마지막으로</a>
